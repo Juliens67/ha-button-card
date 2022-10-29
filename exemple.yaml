@@ -1,0 +1,101 @@
+type: custom:button-card
+entity: sensor.cpu_temperature
+icon: mdi:sofa
+aspect_ratio: 1/1
+name: Salon
+styles:
+  card:
+    - background-color: grey
+    - border-radius: 10px
+    - padding: 10%
+    - color: white
+    - font-size: 10px
+    - width: 350px
+    - height: 70px
+  name:
+    - font-weight: bold
+    - font-size: 13px
+    - color: white
+    - position: absolute
+    - top: 30%
+    - left: 15%
+  icon:
+    - color: white
+    - width: 10%
+    - position: absolute
+    - left: 3%
+    - top: 0%
+  custom_fields:
+    temp:
+      - position: absolute
+      - top: 55%
+      - left: 15%
+    bouton:
+      - position: absolute
+      - left: 45%
+      - top: 15%
+custom_fields:
+  temp: |
+    [[[
+      return `<span>${states['sensor.salon_temp_humi_temperature'].state} °C  /  ${states['sensor.salon_temp_humi_humidity'].state} %</span>`
+    ]]]
+  bouton:
+    card:
+      type: grid
+      cards:
+        - type: custom:button-card
+          entity: light.groupe_salon
+          icon: |
+            [[[
+              if (states["light.groupe_salon"].state == "on") 
+                return 'mdi:lightbulb-on';
+              else return "mdi:lightbulb-off";
+            ]]]
+          show_name: false
+          hold_action:
+            action: toggle
+          styles:
+            card:
+              - background-color: transparent
+              - border-radius: 10px
+              - color: white
+              - font-size: 10px
+              - width: 50px
+              - height: 50px
+            icon:
+              - color: |
+                  [[[
+                    if (states["light.groupe_salon"].state == "on") 
+                      return 'orange';
+                    else return "black";
+                  ]]]
+        - type: custom:button-card
+          entity: cover.groupe_salon
+          icon: mdi:window-shutter
+          show_name: false
+          hold_action:
+            action: toggle
+          styles:
+            card:
+              - background-color: transparent
+              - border-radius: 10px
+              - color: white
+              - font-size: 10px
+              - width: 50px
+              - height: 50px
+        - type: custom:button-card
+          entity: switch.switch_salon_tv_on_off
+          icon: mdi:flash
+          show_name: false
+          hold_action:
+            action: toggle
+          styles:
+            card:
+              - background-color: transparent
+              - border-radius: 10px
+              - color: white
+              - font-size: 10px
+              - width: 50px
+              - height: 50px
+      columns: 3
+      square: false
